@@ -10,6 +10,7 @@ var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev')
+var bodyParser = require('body-parser');
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -42,6 +43,11 @@ compiler.plugin('compilation', function (compilation) {
     cb()
   })
 })
+
+// define router
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/api', require('./router-monitor-board'))
 
 // serve webpack bundle output
 app.use(devMiddleware)

@@ -3,7 +3,7 @@ module.exports = {
     env: {
       NODE_ENV: '"development"'
     },
-    port: 8080,
+    port: 3000,
     autoOpenBrowser: true,
     assetsPublicPath: '/',
     // CSS Sourcemaps off by default because relative paths are "buggy"
