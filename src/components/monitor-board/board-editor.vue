@@ -15,16 +15,17 @@
 				</el-row>
 			</el-header>
 			<el-container>
-				<el-aside width="300px">
+				<el-aside width="300px" v-if="selectedElement">
 					<EditSide :character="selectedElement"></EditSide>
 				</el-aside>
-				<el-main>
+				<el-main id="boardEditorMain">
 					<el-container class="main-container">
 						<ElementText
 							v-for="(item, index) in textElements"
 							:key="index"
 							:character="item"
-							@activated="onActivated">
+							@activated="onActivated"
+							@deactivated="onDeactivated">
 						</ElementText>
 					</el-container>
 				</el-main>
@@ -48,6 +49,11 @@
 		},
 		data: function () {
 			return {
+				sceneElement: {
+					id: 123,
+					type: 1,
+					background: '#fff'
+				},
 				textElements: [],
 				paramElements: [],
 				pictureElements: [],
@@ -64,7 +70,9 @@
 							this.paramElements.push(item)
 						} else if (item.type === 4) {
 							this.pictureElements.push(item)
-						}
+						} else if (item.type === 1) {
+							this.sceneElement = item
+						} 
 					})
 				})
 			},
@@ -83,15 +91,25 @@
 						x: 0,
 						y: 0,
 						w: 100,
-						h: 100
+						h: 100,
+						z: 1,
+						text: '',
+						fontSize: 12,
+						fontColor: '#000000',
+						borderColor: '#ffffff',
+						bgColor: '#ffffff',
 					})
 				})
 			},
 			onActivated (item) {
-				console.log(item)
+				this.selectedElement = item
+			},
+			onDeactivated () {
+				this.selectedElement = this.sceneElement
 			}
 		},
 		mounted () {
+			this.onDeactivated()
 			this.getElements()
 		}
 	}
@@ -105,6 +123,11 @@
 	.board-editor .el-main {
 		overflow: auto;
 		height: 500px;
+	}
+	.el-aside {
+		height: 500px;
+		background: #ecf0f4;
+		overflow: all;
 	}
 	.board-editor .main-container {
 		min-width: 2000px;

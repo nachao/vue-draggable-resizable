@@ -265,6 +265,13 @@ export default {
       const target = e.target || e.srcElement
       const regex = new RegExp('handle-([trmbl]{2})', '')
 
+      console.dir(this.$el)
+
+      // scope
+      if (this.scoped && this.scoped !== target.className) {
+        return
+      }
+
       if (!this.$el.contains(target) && !regex.test(target.className)) {
         if (this.enabled) {
           this.enabled = false
@@ -441,7 +448,8 @@ export default {
         left: this.left + 'px',
         width: this.width + 'px',
         height: this.height + 'px',
-        zIndex: this.zIndex
+        zIndex: this.zIndex,
+        ...this.custom
       }
     }
   },
