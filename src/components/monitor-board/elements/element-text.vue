@@ -50,9 +50,15 @@
 		},
 		methods: {
 			onResizstop(left, top, width, height) {
+				this.character.x = left 
+				this.character.y = top 
+				this.character.w = width 
+				this.character.h = height 
 				console.log(1111, left, top, width, height)
 			},
 			onDragstop(left, top) {
+				this.character.x = left 
+				this.character.y = top 
 				console.log(222, left, top)
 			},
 			onActivated() {
